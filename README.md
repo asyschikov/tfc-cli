@@ -37,17 +37,27 @@ ln -s "$PWD/bin/tfc" ~/.local/bin/tfc
 
 ## Authentication
 
+The fastest way to get set up is to save your token and default org to a local config file:
+
+```bash
+tfc config set-token <your-tfc-api-token>
+tfc config set-org <your-org>
+```
+
+This writes to `.tfc-cli.json` at the project root (gitignored, `0600` permissions). You can see the exact path with `tfc config path`.
+
 Token resolution order (first match wins):
 
 1. `--token` flag
 2. `TFC_TOKEN` environment variable
-3. `~/.terraform.d/credentials.tfrc.json` (written by `terraform login`)
+3. `.tfc-cli.json` local config file
+4. `~/.terraform.d/credentials.tfrc.json` (written by `terraform login`)
 
 Organization resolution order:
 
 1. `--org` flag
 2. `TFC_ORG` environment variable
-3. Hardcoded default in `src/tfc_cli/config.py`
+3. `.tfc-cli.json` local config file
 
 ## Using it as a CLI
 
